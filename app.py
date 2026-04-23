@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import database
 import random
+import os
 
 app = Flask(__name__)
 
@@ -244,4 +245,5 @@ def success(order_id):
     return render_template('success.html', order_id=order_id)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
