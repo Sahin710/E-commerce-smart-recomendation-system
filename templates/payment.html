@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place Your Order - Reco</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .checkout-container { max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .summary-box { background: #fbfbfb; border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        .form-group input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+    <nav class="navbar" style="justify-content: center;">
+        <h1 style="color: white; margin: 0;">Reco™ Checkout</h1>
+    </nav>
+    <div class="checkout-container">
+        <h2>Review your order</h2>
+        
+        <div class="summary-box">
+            <p><strong>Shipping address:</strong> {{ address }} <a href="{{ url_for('checkout') }}" style="color: #007185; font-size: 0.9em; margin-left: 10px;">Change</a></p>
+            <p style="font-size: 1.2em; margin-top: 10px;"><strong>Order total: <span style="color: #B12704;">${{ "%.2f"|format(total) }}</span></strong></p>
+        </div>
+
+        <h3>Payment Method</h3>
+        <form action="{{ url_for('payment', addr=address) }}" method="POST">
+            <div class="form-group">
+                <label for="cc">Credit Card Number</label>
+                <input type="text" id="cc" name="cc" required placeholder="XXXX-XXXX-XXXX-XXXX">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label for="exp">Expiration Date</label>
+                    <input type="text" id="exp" name="exp" required placeholder="MM/YY">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" required placeholder="123">
+                </div>
+            </div>
+            <button type="submit" class="add-to-cart" style="width: 100%; margin-top: 10px; font-weight: bold; font-size: 1.1rem; padding: 12px;">Place your order</button>
+        </form>
+    </div>
+</body>
+</html>

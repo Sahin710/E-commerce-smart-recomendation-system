@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Placed - Reco</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .checkout-container { max-width: 600px; margin: 40px auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
+        .checkmark { font-size: 4rem; color: #067d62; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar" style="justify-content: center;">
+        <h1 style="color: white; margin: 0;">Reco™</h1>
+    </nav>
+    <div class="checkout-container">
+        <div class="checkmark">✅</div>
+        <h2 style="color: #067d62; margin-bottom: 10px;">Order placed, thanks!</h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">Confirmation will be sent to your email.</p>
+        <p style="color: #565959; margin-bottom: 30px;">Order #{{ order_id }}</p>
+        
+        <a href="{{ url_for('index') }}" style="display: inline-block; background: #ffd814; padding: 10px 20px; border-radius: 20px; text-decoration: none; color: black; font-weight: bold; border: 1px solid #fcd200;">Continue Shopping</a>
+    </div>
+</body>
+</html>

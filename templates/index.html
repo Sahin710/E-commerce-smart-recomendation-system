@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reco V3 Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- Premium Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo" style="color: white; text-decoration: none;">Reco.</a>
+            <div class="search-wrapper">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search for shoes, electronics, watches..." autocomplete="off">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="suggestions-box" id="suggestions-box">
+                    <!-- JS Auto-suggest populated here -->
+                </div>
+            </div>
+            <div class="user-menu">
+                <span>Account</span>
+                <a href="{{ url_for('view_cart') }}" class="cart-icon" style="color: white; text-decoration: none;">
+                    🛒 <span style="font-weight: 700;">Cart</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Categories Strip -->
+    <div style="background: #232f3e; border-top: 1px solid #334155; padding: 0 20px;">
+        <div class="category-pills" style="max-width: 1600px; margin: 0 auto;">
+            <div class="category-pill active">All</div>
+            <div class="category-pill">Shoes</div>
+            <div class="category-pill">Electronics</div>
+            <div class="category-pill">Sunglasses</div>
+            <div class="category-pill">Accessories</div>
+            <div class="category-pill">Clothing</div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-text">
+                <h1>Discover The New Collection</h1>
+                <p>Up to 25% off on select premium electronics and apparel. Upgrade your lifestyle.</p>
+                <button style="margin-top: 20px; padding: 12px 30px; font-weight: bold; font-size: 1.1rem; border-radius: 30px; border: none; background: #febd69; cursor: pointer;">Shop Now</button>
+            </div>
+            <div class="hero-image" style="max-width: 300px;">
+                <!-- Just a nice graphic or logo could go here -->
+                <h1 style="font-size: 6rem; opacity: 0.2; margin: 0;">📦</h1>
+            </div>
+        </header>
+
+        <!-- Trending Section -->
+        {% if trending %}
+        <section class="section">
+            <h2 class="section-title">🔥 Trending Right Now</h2>
+            <div class="product-rail">
+                {% for p in trending %}
+                <div class="product-card" onclick="window.location.href='/product/{{ p.id }}'">
+                    {% if p.discount and p.discount > 0 %}
+                    <div class="badge-discount">-{{ p.discount }}%</div>
+                    {% endif %}
+                    <div class="quick-view-layer">
+                        <button class="quick-view-btn">View Details</button>
+                    </div>
+                    <div class="product-image">
+                        <img src="{{ p.image_url }}" alt="{{ p.name }}">
+                    </div>
+                    <div class="product-details">
+                        <span class="product-category">{{ p.category }}</span>
+                        <h3 class="product-name">{{ p.name }}</h3>
+                        <div class="rating-stars">
+                            ★★★★☆ <span class="rating-count">({{ p.rating }})</span>
+                        </div>
+                        <div class="product-price">
+                            ${{ "%.2f"|format(p.price - (p.price * (p.discount|default(0)/100))) }}
+                            {% if p.discount and p.discount > 0 %}
+                            <span class="product-price-old">${{ "%.2f"|format(p.price) }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Recommended Section (Dynamic) -->
+        <section class="section recommended-section">
+            <h2 class="section-title">✨ Recommended for You</h2>
+            <div id="recommendation-container" class="product-rail">
+                <!-- Recommendations injected via JS -->
+            </div>
+            <div class="loading" id="recommendation-loading" style="display: none;">
+                Generating personalized recommendations...
+            </div>
+        </section>
+
+        <!-- All Products Section -->
+        <section class="section" id="all-products-section">
+            <h2 class="section-title">📦 Explore All Products</h2>
+            <div class="product-grid" id="all-products-grid">
+                {% for p in products %}
+                <div class="product-card all-product-item" data-name="{{ p.name | lower }}" data-category="{{ p.category | lower }}" onclick="window.location.href='/product/{{ p.id }}'">
+                    {% if p.discount and p.discount > 0 %}
+                    <div class="badge-discount">-{{ p.discount }}%</div>
+                    {% endif %}
+                    <div class="quick-view-layer">
+                        <button class="quick-view-btn">View Details</button>
+                    </div>
+                    <div class="product-image">
+                        <img src="{{ p.image_url }}" alt="{{ p.name }}">
+                    </div>
+                    <div class="product-details">
+                        <span class="product-category">{{ p.category }}</span>
+                        <h3 class="product-name">{{ p.name }}</h3>
+                        <div class="rating-stars">
+                            ★★★★☆ <span class="rating-count">({{ p.rating }})</span>
+                        </div>
+                        <div class="product-bottom">
+                            <div class="product-price">
+                                ${{ "%.2f"|format(p.price - (p.price * (p.discount|default(0)/100))) }}
+                                {% if p.discount and p.discount > 0 %}
+                                <span class="product-price-old">${{ "%.2f"|format(p.price) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

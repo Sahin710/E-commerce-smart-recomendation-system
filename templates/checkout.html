@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - Address</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        .form-group input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .checkout-container { max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <nav class="navbar" style="justify-content: center;">
+        <h1 style="color: white; margin: 0;">Reco™ Checkout</h1>
+    </nav>
+    <div class="checkout-container">
+        <h2>Select a shipping address</h2>
+        <h3 style="margin: 20px 0; color: #B12704;">Order Total: ${{ "%.2f"|format(total) }}</h3>
+        <form action="{{ url_for('checkout') }}" method="POST">
+            <div class="form-group">
+                <label for="address">Street Address</label>
+                <input type="text" id="address" name="address" required placeholder="123 Main St">
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" required placeholder="New York">
+            </div>
+            <div class="form-group">
+                <label for="zipcode">Zip Code</label>
+                <input type="text" id="zipcode" name="zipcode" required placeholder="10001">
+            </div>
+            <button type="submit" class="add-to-cart" style="width: 100%; margin-top: 20px; font-weight: bold;">Use this address</button>
+        </form>
+    </div>
+</body>
+</html>

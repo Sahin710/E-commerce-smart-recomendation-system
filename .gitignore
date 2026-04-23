@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv/
+env.bak/
+venv.bak/
+*.db
+*.sqlite
+*.sqlite3
+
+# Ignore the fraud_detection project as requested
+fraud_detection/
